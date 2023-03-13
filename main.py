@@ -98,7 +98,7 @@ def parse_data(link=None):
 
         # пробегаемся в цикле по нашим кодам и скачиваем
         zip_ranges = read_file()
-        for zone_ranges in zip_ranges[:10]:
+        for zone_ranges in zip_ranges:
             # вставляем полученные коды из списка
             input_path.clear()
 
