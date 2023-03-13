@@ -77,6 +77,8 @@ def parse_data(link=None):
     try:
 
         # Устанавливаем путь к папке для скачивания
+        if not os.path.exists("downloads"):
+            os.makedirs("downloads")
         download_dir = os.path.join(os.getcwd(), "downloads")
 
         s = Service(ChromeDriverManager().install())
