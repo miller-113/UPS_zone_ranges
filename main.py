@@ -47,26 +47,30 @@ def read_file(file=None):
 
 
 def update_workbook(data, file=None):
-    # открываем файл
-    workbook = openpyxl.load_workbook(file or "Carrierszoneranges.xlsx")
+    try:
+        file_name = "Carrierszoneranges.xlsx"
+        # открываем файл
+        workbook = openpyxl.load_workbook(file or file_name)
 
-    # Создаем новый лист
-    sheet = workbook.create_sheet("Ups zip ranges(upd)")
+        # Создаем новый лист
+        sheet = workbook.create_sheet("Ups zip ranges(upd)")
 
-    # определяем хедер
-    headers = ["UPS zone ranges", "Zip From", "Zip To"]
+        # определяем хедер
+        headers = ["UPS zone ranges", "Zip From", "Zip To"]
 
-    # добавляем хедер
-    sheet.append(headers)
+        # добавляем хедер
+        sheet.append(headers)
 
-    for i in data:
-        if i:
-            zip_from, zip_to = i.split("-")
-            row = [i, zip_from, zip_to]
-            sheet.append(row)
+        for i in data:
+            if i:
+                zip_from, zip_to = i.split("-")
+                row = [i, zip_from, zip_to]
+                sheet.append(row)
 
-    # сохраняем воркбук
-    workbook.save(file or "Carrierszoneranges.xlsx")
+        # сохраняем воркбук
+        workbook.save(file or file_name)
+    except Exception as e:
+        print(f'Error occur in update_workbook func: {e}')
 
 
 def parse_data(link=None):
@@ -168,7 +172,7 @@ def parse_data(link=None):
 
 
     except Exception as e:
-        print(f'Exception occur: {e}')
+        print(f'Error occur in parse_data func: {e}')
     finally:
         browser.close()
 
@@ -176,13 +180,16 @@ def parse_data(link=None):
 # переименовываем файлы с правильным разрешением, так как они загружаются
 # в формате xlsx, но с названием xls
 def rename_files():
-    folder_path = 'downloads'
+    try:
+        folder_path = 'downloads'
 
-    for filename in os.listdir(folder_path):
-        if filename.endswith('.xls'):
-            new_filename = filename[:-4] + '.xlsx'
-            os.rename(os.path.join(folder_path, filename),
-                      os.path.join(folder_path, new_filename))
+        for filename in os.listdir(folder_path):
+            if filename.endswith('.xls'):
+                new_filename = filename[:-4] + '.xlsx'
+                os.rename(os.path.join(folder_path, filename),
+                          os.path.join(folder_path, new_filename))
+    except Exception as e:
+        print(f'Error occur in rename_files func: {e}')
 
 
 if __name__ == '__main__':
