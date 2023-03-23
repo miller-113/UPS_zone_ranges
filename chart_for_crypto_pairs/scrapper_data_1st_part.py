@@ -1,4 +1,7 @@
+from bs4 import BeautifulSoup
+
 from functions_and_consts import *
+import pandas as pd
 # 1
 # # Отримання книги ордерів для пари торгів BTCUSDT з глибиною 5
 
